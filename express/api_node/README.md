@@ -14,7 +14,12 @@ Clone the project and enter in the express directory then install all dependenci
     yarn
 ```
 
-Copy the .env.example to .env and configure the environment variables. Make sure you have postgres installed.
+Copy the .env.example to .env and configure the environment variables. Make sure you have postgres installed. Then you can run the migration
+
+```bash
+    npx prisma migrate dev
+```
+
 ## Running
 
 ```bash
