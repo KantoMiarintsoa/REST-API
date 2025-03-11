@@ -32,6 +32,12 @@
 $ yarn install
 ```
 
+Copy the .env.example and change the environment variables. Make sure you have postgres installed. Then run the migration
+
+```bash
+$ npx prisma migrate dev
+```
+
 ## Compile and run the project
 
 ```bash
