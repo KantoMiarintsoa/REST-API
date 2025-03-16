@@ -1,9 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AuthModule } from './auth/auth.module';
+import { ApiGuard } from './auth/api.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  const apiGuard = app.select(AuthModule)
+    .get(ApiGuard);
+
+  app.useGlobalGuards(apiGuard)
 
   const config = new DocumentBuilder()
     .setTitle('api user')

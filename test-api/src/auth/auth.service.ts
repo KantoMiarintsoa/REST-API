@@ -18,12 +18,13 @@ export class AuthService {
             })
         }
 
-        console.log(pass)
         const passwordMatch = await this.userService.passwordMatch(user.password, pass)
 
-        if (!passwordMatch) {
+        if (!user.isActive || !passwordMatch) {
             throw new UnauthorizedException();
         }
+
+        const { password, ...userData } = user;
 
 
         const payload = { id: user.id, email: user.email }
@@ -31,10 +32,7 @@ export class AuthService {
             access_token: await this.jwtService.signAsync(payload, {
                 secret: process.env.SECRET
             }),
-            uer: {
-                name: user.name,
-                email: user.email
-            }
+            user: userData
         }
     }
 }

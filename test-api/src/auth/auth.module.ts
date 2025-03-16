@@ -7,6 +7,7 @@ import { CommonModule } from 'src/common/common.module';
 import { UsersService } from 'src/users/users.service';
 import { UsersModule } from 'src/users/users.module';
 import { UniqueEmailConstraint } from 'src/validators/unique-email.validators';
+import { ApiGuard } from './api.guard';
 
 @Module({
   imports: [
@@ -17,8 +18,8 @@ import { UniqueEmailConstraint } from 'src/validators/unique-email.validators';
       secret: process.env.SECRET
     }),
     UsersModule],
-  providers: [AuthService, AuthGuard, UniqueEmailConstraint],
+  providers: [AuthService, AuthGuard, UniqueEmailConstraint, ApiGuard],
   controllers: [AuthController],
-  exports: [AuthGuard]
+  exports: [AuthGuard, ApiGuard]
 })
 export class AuthModule { }

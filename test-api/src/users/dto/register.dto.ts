@@ -13,7 +13,7 @@ export class RegisterUSerDto {
     @UniqueEmail()
     email: string
 
-    @ApiProperty()
+    @ApiProperty({ example: "kanto1234", description: "password of user" })
     @IsString()
     @Length(6, undefined, { message: "Password must be between 6 characters" })
     password: string

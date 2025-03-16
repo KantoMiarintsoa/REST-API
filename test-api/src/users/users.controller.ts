@@ -7,11 +7,6 @@ import { DesactiveUserDTO } from './dto/desactive-user.dto';
 import { ApiBadRequestResponse, ApiBody, ApiOkResponse, ApiOperation, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { UserEntity } from './entities/user.entity';
 
-// class Test {
-//     @ApiProperty()
-//     message: string;
-// }
-
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
@@ -21,7 +16,6 @@ export class UsersController {
 
     @Post("register")
     @ApiOkResponse({ type: UserEntity })
-    // @ApiBadRequestResponse({ type: Test })
     async register(
         @Body() data: RegisterUSerDto
     ) {
@@ -39,7 +33,8 @@ export class UsersController {
     }
 
     @Put("update")
-    @ApiOperation({ summary: "update user" })
+    @ApiOkResponse({ type: UserEntity })
+    @ApiOperation({ summary: "update user with id" })
     @UseGuards(AuthGuard)
     async updateUSer(
         @Req() req: { user: { id: number } },
@@ -49,7 +44,8 @@ export class UsersController {
     }
 
     @Delete('delete')
-    @ApiOperation({ summary: "user deleted" })
+    @ApiOkResponse({ type: UserEntity })
+    @ApiOperation({ summary: "delete user with id" })
     @UseGuards(AuthGuard)
     async deleteUser(
         @Req() req: { user: { id: number } }
@@ -57,14 +53,14 @@ export class UsersController {
         return await this.userService.deleteUser(req.user.id)
     }
 
-    @Patch(':id/desactive')
-    // @ApiOperation({ summary: "desactive user" })
+    @Patch('desactive')
+    @ApiOkResponse({ type: UserEntity })
+    @ApiOperation({ summary: "deactive user with id" })
+    @UseGuards(AuthGuard)
     async desactiveUser(
-        @Param('id', ParseIntPipe) id: number,
-        @Body() data: DesactiveUserDTO
+        @Body() data: DesactiveUserDTO,
+        @Req() req: { user: { id: number } }
     ) {
-        return await this.userService.desactiveUser(id, Boolean(data.isActive))
+        return await this.userService.desactiveUser(req.user.id, Boolean(data.isActive))
     }
-
-
 }
