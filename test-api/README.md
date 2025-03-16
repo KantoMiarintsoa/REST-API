@@ -51,6 +51,9 @@ $ yarn run start:dev
 $ yarn run start:prod
 ```
 
+## Documentation
+To view the documentation, go to: http://localhost:3000/api
+
 ## Run tests
 
 ```bash
